@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feelings & Reactions — Lexical Chunks</title>
+<style>
+:root{--bg:#fbf5f5;--grid:#eadfdf;--ink:#25254b;--purple:#8e43c7;--purple2:#c7a0e8;--pink:#dc3c93;--green:#43a35d;--yellow2:#fff1a8}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);font-family:Inter,system-ui,sans-serif;background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:36px 36px}
+.wrap{max-width:1180px;margin:auto;padding:34px 22px 70px}header{background:rgba(255,255,255,.9);border:2px solid #eadcdc;border-radius:28px;padding:28px 30px;box-shadow:0 8px 24px #6d4a6120}
+h1{margin:0;font-family:Georgia,serif;font-size:clamp(34px,5vw,62px);font-weight:500}.sub{font-size:18px;margin-top:8px;color:#62556b}.badge{display:inline-block;background:#daf2a7;border-radius:999px;padding:8px 14px;margin-top:16px;font-weight:700}
+nav{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0}nav button,.btn{border:0;border-radius:999px;padding:11px 17px;font-size:15px;font-weight:750;cursor:pointer;background:#eee4f7;color:#54277a}nav button.active{background:var(--purple);color:white}
+section{display:none}section.active{display:block}.panel{background:rgba(255,255,255,.92);border-radius:26px;padding:26px;margin:18px 0;border:1px solid #eadcdc;box-shadow:0 10px 30px #61455917}
+h2{font-family:Georgia,serif;font-size:33px;margin:0 0 8px}.note{color:#6e6174;margin:0 0 22px}.progress{height:12px;background:#eee5ef;border-radius:999px;overflow:hidden;margin:16px 0}.progress>div{height:100%;background:linear-gradient(90deg,var(--pink),var(--purple));width:0;transition:.25s}
+.flash{max-width:720px;margin:20px auto;min-height:300px;border-radius:32px;background:linear-gradient(145deg,#fff,#f8efff);border:3px solid var(--purple2);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:36px;cursor:pointer}.flash .chunk{font-size:clamp(31px,5vw,54px);font-weight:800}.flash .meaning{font-size:23px;margin-top:18px;color:#5a4a64}.flash .example{font-size:20px;margin-top:16px;background:white;padding:12px 18px;border-radius:18px}
+.controls{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}.choice{padding:18px;border:2px solid #e5d6e6;background:white;border-radius:20px;cursor:pointer;font-size:17px;text-align:left;min-height:78px;color:var(--ink);opacity:1;-webkit-text-fill-color:var(--ink)}.choice:disabled{color:var(--ink);opacity:1;background:white;cursor:default;-webkit-text-fill-color:var(--ink)}.choice.correct,.choice.correct:disabled{background:#e8f7ea;border-color:var(--green);color:#184d24;-webkit-text-fill-color:#184d24}.choice.wrong,.choice.wrong:disabled{background:#ffe6ef;border-color:#e55e8d;color:#6e1f42;-webkit-text-fill-color:#6e1f42}
+.prompt{font-size:27px;font-weight:800;background:#fff4fa;border-left:8px solid var(--pink);border-radius:20px;padding:22px;margin:16px 0}.small{font-size:14px;color:#75687c}.inputline{width:100%;font-size:20px;border:2px solid #dbcde1;border-radius:16px;padding:14px;outline:none;background:white}.feedback{min-height:30px;font-weight:700;margin-top:12px}
+.wordbank{display:flex;gap:9px;flex-wrap:wrap;margin:15px 0}.wordbank span{background:var(--yellow2);padding:8px 12px;border-radius:12px;border:1px solid #ebd264;font-weight:700}
+.matchrow{display:grid;grid-template-columns:1fr 1fr;gap:16px}.col{display:flex;flex-direction:column;gap:10px}.tile{padding:13px 15px;background:white;border:2px solid #ddcfdf;border-radius:16px;cursor:pointer}.tile.selected{outline:4px solid #f2acd1}.tile.done{opacity:.45;text-decoration:line-through}
+.speak-card{min-height:280px;background:linear-gradient(145deg,#fff,#f7f2ff);border:2px solid #d8c5e8;border-radius:28px;padding:34px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}.situation{font-size:25px;font-weight:800}.frame{font-size:22px;margin-top:20px;color:#61388b}.timer{font-size:48px;font-weight:900;margin:16px}
+table{width:100%;border-collapse:separate;border-spacing:0 10px}td{padding:12px}td:first-child{font-weight:800}.translation{color:#705d77}
+@media(max-width:700px){.matchrow{grid-template-columns:1fr}.wrap{padding:18px 12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<h1>Feelings & Reactions</h1>
+<div class="sub">Lexical chunks: learn the whole phrase, not isolated words.</div>
+<span class="badge">adjective + preposition + noun / -ing</span>
+</header>
+
+<nav>
+<button class="active" data-tab="learn">1. Learn chunks</button>
+<button data-tab="match">2. Match meaning</button>
+<button data-tab="context">3. Choose context</button>
+<button data-tab="build">4. Build the chunk</button>
+<button data-tab="speak">5. Speak fast</button>
+</nav>
+
+<section id="learn" class="active">
+<div class="panel">
+<h2>Notice the whole chunk</h2>
+<p class="note">Tap the card. First recall the meaning and a typical situation. Then reveal it.</p>
+<div class="progress"><div id="learnProg"></div></div>
+<div class="flash" id="flash">
+<div class="small">CHUNK</div>
+<div class="chunk" id="flashChunk"></div>
+<div class="meaning" id="flashMeaning" style="display:none"></div>
+<div class="example" id="flashExample" style="display:none"></div>
+</div>
+<div class="controls">
+<button class="btn" id="prev">← Previous</button><button class="btn" id="reveal">Reveal</button><button class="btn" id="next">Next →</button>
+</div>
+</div>
+<div class="panel"><h2>Chunk map</h2><table id="chunkTable"></table></div>
+</section>
+
+<section id="match">
+<div class="panel">
+<h2>Match the chunk to the simple meaning</h2>
+<p class="note">Click one phrase on the left and one meaning on the right.</p>
+<div class="matchrow"><div class="col" id="leftMatch"></div><div class="col" id="rightMatch"></div></div>
+<div class="feedback" id="matchFeedback"></div>
+<button class="btn" onclick="resetMatch()">Reset</button>
+</div>
+</section>
+
+<section id="context">
+<div class="panel">
+<h2>Which chunk fits?</h2>
+<p class="note">Read the situation and retrieve the whole phrase.</p>
+<div class="progress"><div id="contextProg"></div></div>
+<div class="prompt" id="contextPrompt"></div>
+<div class="grid" id="contextChoices"></div>
+<div class="feedback" id="contextFeedback"></div>
+<button class="btn" id="contextNext" style="display:none">Next situation</button>
+</div>
+</section>
+
+<section id="build">
+<div class="panel">
+<h2>Build the natural phrase</h2>
+<p class="note">Type the missing chunk, then read the whole sentence aloud.</p>
+<div class="prompt" id="buildPrompt"></div>
+<div class="wordbank" id="wordbank"></div>
+<input class="inputline" id="buildInput" autocomplete="off" placeholder="Type the missing phrase...">
+<div class="feedback" id="buildFeedback"></div>
+<div class="controls"><button class="btn" id="checkBuild">Check</button><button class="btn" id="showBuild">Show answer</button><button class="btn" id="nextBuild">Next</button></div>
+</div>
+</section>
+
+<section id="speak">
+<div class="panel">
+<h2>Speak fast: 5-second retrieval</h2>
+<p class="note">Read the situation and say ONE full sentence before the timer ends.</p>
+<div class="speak-card">
+<div class="situation" id="situation"></div>
+<div class="frame" id="speakFrame"></div>
+<div class="timer" id="timer">5</div>
+<div class="controls"><button class="btn" id="startTimer">Start 5 sec</button><button class="btn" id="newSituation">New situation</button></div>
+</div>
+</div>
+</section>
+</div>
+
+<script>
+const chunks=[
+{c:"angry about",ru:"злиться из-за / быть сердитым из-за",ex:"I'm angry about the loud music next door."},
+{c:"excited about",ru:"быть в предвкушении / радоваться чему-то",ex:"I'm excited about getting paid."},
+{c:"upset about",ru:"расстраиваться из-за",ex:"I'm upset about my last live stream."},
+{c:"afraid of",ru:"бояться",ex:"I'm afraid of drones."},
+{c:"bored with",ru:"скучать / устать от однообразия",ex:"I'm bored with cooking every day."},
+{c:"sick and tired of",ru:"быть сытым по горло / очень устать от",ex:"I'm sick and tired of doing useless things."},
+{c:"worried about",ru:"переживать из-за",ex:"I'm worried about making mistakes."},
+{c:"happy about",ru:"быть довольным / радоваться",ex:"I'm happy about spending time with my mum."},
+{c:"crazy about",ru:"обожать / быть без ума от",ex:"I'm crazy about gaming."},
+{c:"complain about",ru:"жаловаться на",ex:"I complain about having too much homework."},
+{c:"think about",ru:"думать о / обдумывать",ex:"I'm thinking about taking a break."},
+{c:"apologize for",ru:"извиняться за",ex:"She apologized for being late."},
+{c:"object to",ru:"возражать против",ex:"I don't object to staying at home."}
+];
+const contexts=[
+{q:"Your neighbours play music at 2 a.m.",a:"angry about",opts:["angry about","crazy about","happy about","excited about"]},
+{q:"Tomorrow you finally get the game you've wanted for months.",a:"excited about",opts:["bored with","excited about","afraid of","upset about"]},
+{q:"Your stream went badly and you lost progress.",a:"upset about",opts:["upset about","happy about","object to","crazy about"]},
+{q:"A huge spider is on your desk.",a:"afraid of",opts:["complain about","excited about","afraid of","happy about"]},
+{q:"You do exactly the same homework routine every day.",a:"bored with",opts:["bored with","angry about","crazy about","apologize for"]},
+{q:"You have summer reading, extra classes, chores and no free evening.",a:"sick and tired of",opts:["happy about","think about","sick and tired of","excited about"]},
+{q:"You have a test tomorrow and keep imagining mistakes.",a:"worried about",opts:["worried about","crazy about","bored with","object to"]},
+{q:"You can spend the whole evening playing your favourite game.",a:"crazy about",opts:["afraid of","crazy about","upset about","sick and tired of"]}
+];
+const builds=[
+{p:"I'm ______ the loud music next door.",a:"angry about",bank:["angry about","afraid of","happy about"]},
+{p:"I'm ______ getting paid.",a:"excited about",bank:["excited about","bored with","object to"]},
+{p:"I'm ______ my last live stream.",a:"upset about",bank:["upset about","crazy about","apologize for"]},
+{p:"I'm ______ making mistakes in class.",a:"worried about",bank:["worried about","happy about","sick and tired of"]},
+{p:"I'm ______ doing the same thing every day.",a:"sick and tired of",bank:["sick and tired of","excited about","afraid of"]},
+{p:"I'm ______ playing this game. It's always the same.",a:"bored with",bank:["bored with","angry about","crazy about"]},
+{p:"She ______ being late.",a:"apologized for",bank:["apologized for","thought about","was excited about"]},
+{p:"I'm ______ taking a day off.",a:"thinking about",bank:["thinking about","complaining about","afraid of"]}
+];
+const speak=[
+{s:"Your Wi-Fi stops working in the middle of a game.",f:"I'm angry about..."},
+{s:"A new game comes out tomorrow.",f:"I'm excited about..."},
+{s:"You have too much summer reading.",f:"I'm sick and tired of..."},
+{s:"You have to speak in front of the class.",f:"I'm worried about... / I'm afraid of..."},
+{s:"You spend the whole day doing the same task.",f:"I'm bored with..."},
+{s:"Something embarrassing happened online.",f:"I'm upset about..."},
+{s:"You get a free evening with no homework.",f:"I'm happy about..."},
+{s:"Talk about something you absolutely love.",f:"I'm crazy about..."}
+];
+
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+document.querySelectorAll('section').forEach(x=>x.classList.remove('active'));
+b.classList.add('active');document.getElementById(b.dataset.tab).classList.add('active');
+});
+
+let li=0,revealed=false;
+function showFlash(){let x=chunks[li];flashChunk.textContent=x.c;flashMeaning.textContent=x.ru;flashExample.textContent=x.ex;flashMeaning.style.display=revealed?'block':'none';flashExample.style.display=revealed?'block':'none';learnProg.style.width=((li+1)/chunks.length*100)+'%'}
+flash.onclick=()=>{revealed=!revealed;showFlash()};reveal.onclick=()=>{revealed=true;showFlash()};next.onclick=()=>{li=(li+1)%chunks.length;revealed=false;showFlash()};prev.onclick=()=>{li=(li-1+chunks.length)%chunks.length;revealed=false;showFlash()};showFlash();
+chunkTable.innerHTML=chunks.map(x=>`<tr><td>${x.c}</td><td class="translation">${x.ru}</td><td>${x.ex}</td></tr>`).join("");
+
+let selL=null,selR=null,done=new Set();
+function renderMatch(){
+leftMatch.innerHTML="";rightMatch.innerHTML="";
+chunks.slice(0,8).forEach((x,i)=>{let d=document.createElement('div');d.className='tile'+(done.has(i)?' done':'');d.textContent=x.c;d.onclick=()=>pick('L',d,i);leftMatch.appendChild(d)});
+[...chunks.slice(0,8).map((x,i)=>({t:x.ru,i}))].sort(()=>Math.random()-.5).forEach(x=>{let d=document.createElement('div');d.className='tile'+(done.has(x.i)?' done':'');d.textContent=x.t;d.onclick=()=>pick('R',d,x.i);rightMatch.appendChild(d)})
+}
+function pick(side,el,i){
+if(done.has(i))return;
+if(side==='L'){document.querySelectorAll('#leftMatch .tile').forEach(x=>x.classList.remove('selected'));selL={el,i};el.classList.add('selected')}
+else{document.querySelectorAll('#rightMatch .tile').forEach(x=>x.classList.remove('selected'));selR={el,i};el.classList.add('selected')}
+if(selL&&selR){if(selL.i===selR.i){done.add(selL.i);matchFeedback.textContent="✓ Nice. Recall it as one chunk.";selL=null;selR=null;setTimeout(renderMatch,250)}else{matchFeedback.textContent="Not this pair. Try again.";selL.el.classList.remove('selected');selR.el.classList.remove('selected');selL=null;selR=null}}
+}
+function resetMatch(){done.clear();selL=selR=null;matchFeedback.textContent="";renderMatch()}renderMatch();
+
+let ci=0;
+function showContext(){
+let x=contexts[ci];contextPrompt.textContent=x.q;contextFeedback.textContent="";contextNext.style.display='none';contextChoices.innerHTML="";
+[...x.opts].sort(()=>Math.random()-.5).forEach(o=>{let b=document.createElement('button');b.className='choice';b.textContent=o;b.onclick=()=>{document.querySelectorAll('#contextChoices .choice').forEach(z=>z.disabled=true);if(o===x.a){b.classList.add('correct');contextFeedback.textContent="✓ Yes. Now say a FULL sentence aloud."}else{b.classList.add('wrong');contextFeedback.textContent=`Correct chunk: ${x.a}. Say it aloud with the situation.`}contextNext.style.display='inline-block'};contextChoices.appendChild(b)});
+contextProg.style.width=(ci/contexts.length*100)+'%'}
+contextNext.onclick=()=>{ci=(ci+1)%contexts.length;showContext()};showContext();
+
+let bi=0;
+function norm(s){return s.toLowerCase().replace(/[’']/g,"'").replace(/[.,!?]/g,"").replace(/\s+/g," ").trim()}
+function showBuild(){let x=builds[bi];buildPrompt.textContent=x.p;buildInput.value="";buildFeedback.textContent="";wordbank.innerHTML=[...x.bank].sort(()=>Math.random()-.5).map(w=>`<span>${w}</span>`).join("")}
+checkBuild.onclick=()=>{let a=builds[bi].a,v=norm(buildInput.value);buildFeedback.textContent=v===norm(a)?"✓ Correct. Read the whole sentence aloud.":"Not quite. Think of the whole chunk, not only the preposition."}
+showBuild.onclick=()=>{buildFeedback.textContent="Answer: "+builds[bi].a};nextBuild.onclick=()=>{bi=(bi+1)%builds.length;showBuild()};buildInput.addEventListener('keydown',e=>{if(e.key==='Enter')checkBuild.click()});showBuild();
+
+let si=0,timerInt=null;
+function showSpeak(){situation.textContent=speak[si].s;speakFrame.textContent=speak[si].f;timer.textContent="5"}newSituation.onclick=()=>{si=(si+1)%speak.length;clearInterval(timerInt);showSpeak()}
+startTimer.onclick=()=>{clearInterval(timerInt);let n=5;timer.textContent=n;timerInt=setInterval(()=>{n--;timer.textContent=n;if(n<=0){clearInterval(timerInt);timer.textContent="SPEAK!"}},1000)};showSpeak();
+</script>
+</body>
+</html>
